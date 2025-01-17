@@ -16,7 +16,7 @@ class ZipParser:
         if signature != b'PK\x05\x06':
             raise ValueError("Nie znaleziono końca centralnego katalogu.")
 
-        # Rozpakuj dane końca centralnego katalogu
+        
         data = self.file.read(18)
         _, _, _, self.num_entries, _, self.central_dir_offset = struct.unpack("<4H2L", data)
 
@@ -60,7 +60,7 @@ class ZipParser:
         file_name_length, extra_field_length = struct.unpack("<2H", header_data[22:26])
         self.file.seek(file_name_length + extra_field_length, os.SEEK_CUR)
 
-        # Odczytaj skompresowane dane
+       
         compressed_data = self.file.read(entry['compressed_size'])
 
         return compressed_data
